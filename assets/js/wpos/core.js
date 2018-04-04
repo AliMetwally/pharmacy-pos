@@ -511,7 +511,7 @@ function WPOS() {
         confirmButtonText: 'Check/Renew',
         showLoaderOnConfirm: true,
         preConfirm: (email) => {
-          return fetch(`http://pharmacypluspos.com/users/profile/license/subscription?email=${email}`);
+          return fetch(`http://biasharapos.com/users/profile/license/subscription?email=${email}`);
         },
         allowOutsideClick: () => !swal.isLoading()
       }).then(json => {
