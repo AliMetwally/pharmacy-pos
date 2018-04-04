@@ -1,6 +1,6 @@
 {
   "name": "pharmacy_pos",
-  "productName": "Pharmacy Plus POS",
+  "productName": "Biashara Retail POS",
   "version": "0.0.1",
   "repository": "https://github.com/nyugoh/pharmacy-pos.git",
   "description": "Web based POS system",
@@ -25,37 +25,5 @@
   "devDependencies": {
     "electron": "^1.8.3",
     "electron-builder": "^20.8.1"
-  },
-  "config": {
-    "forge": "electron-forge-config.js"
-  },
-  "build": {
-    "appId": "com.electron.magnum",
-    "productName": "Pharmacy Plus POS",
-    "copyright": "Copyright © 2018 Magnum Digital Limited Kenya",
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "assets/images/win.ico"
-    }
   }
 }
