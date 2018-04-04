@@ -80,7 +80,7 @@
         <td><input id="setstockexpiryDate" class="form-control" type="text" value=""/></td>
       </tr>
       <tr>
-        <td style="text-align: right;"><label>Inventory No:&nbsp;</label></td>
+        <td style="text-align: right;"><label>Invoice No:&nbsp;</label></td>
         <td><input id="setstockinventoryNo" class="form-control" type="text"/></td>
       </tr>
       <tr>
@@ -559,7 +559,6 @@
         datatable.api().draw(false);
     }
     function exportStock(){
-        //var data  = WPOS.table2CSV($("#stocktable"));
         var filename = "stock-"+WPOS.util.getDateFromTimestamp(new Date());
         filename = filename.replace(" ", "");
 
@@ -567,31 +566,37 @@
         var config = JSON.parse(localStorage.getItem('wpos_config'));
         var sortable=[];
         var items = WPOS.getJsonData("stock/get");
-        for(var key in items)
-          if(items.hasOwnProperty(key))
-            sortable.push([key, items[key]]);
+        var list = {};
+        for(var item in items) {
+            if (items[item].stockType === '1')
+                list[items[item].name] = items[item];
+        }
+        for(var key in list)
+            if(list.hasOwnProperty(key))
+                sortable.push([key, list[key]]);
         var sorted = sortable.sort(function(a, b) {
           return a[1].name.localeCompare(b[1].name);
         });
-        for(var item in sorted) {
-          var dataobj = JSON.parse(sorted[item][1].data);
-          if (sorted[item][1].stockType === '1')
+        var i = 1;
+        for(var item in sorted){
+            i++;
             data[item] = {
-              code: "",
-              name: sorted[item][1].name,
-              description: sorted[item][1].description,
-              locationid: config.deviceconfig.locationid,
-              cost: 0.00,
-              price: 0.00,
-              stocklevel: "",
-              reorderpoint: sorted[item][1].reorderPoint,
-              supplier: '',
-              inventoryNo: "0000",
-              expiryDate: "31/12/2050",
-              taxname: WPOS.getTaxTable().rules[sorted[item][1].taxid].name,
-              categoryid: sorted[item][1].categoryid
+                code: "",
+                name: sorted[item][1].name,
+                description: sorted[item][1].description,
+                locationid: config.deviceconfig.locationid,
+                cost: 0.00,
+                price: '=(PRODUCT(E'+(i)+',1.3))',
+                stocklevel: "",
+                reorderpoint: sorted[item][1].reorderPoint,
+                supplier: '',
+                inventoryNo: "0000",
+                expiryDate: "31/12/2050",
+                taxname: WPOS.getTaxTable().rules[sorted[item][1].taxid].name,
+                categoryid: sorted[item][1].categoryid
             };
         }
+
         if (Object.keys(data).length === 0) {
           data[0] = {
             code: "M00001",
@@ -599,7 +604,7 @@
             description: "Syrup",
             locationid: config.deviceconfig.locationid,
             cost: 100,
-            price: 150,
+            price: '=(PRODUCT(E2,1.3))',
             stocklevel: 25,
             reorderpoint: 10,
             supplier: 'Freb',
@@ -611,7 +616,7 @@
         }
 
         var csv = WPOS.data2CSV(
-            ['Stock Code', '*Name', 'Description', '*Location', '*Unit Cost', '*Unit Price', '*Stock Level', 'Reorder Point', '*Supplier Name', 'Inventory No', 'Expiry Date', 'Tax Name', 'Category Name'],
+            ['Stock Code', '*Name', 'Description', '*Location', '*Unit Cost', '*Unit Price', '*Stock Level', 'Reorder Point', '*Supplier Name', 'Invoice No', 'Expiry Date', 'Tax Name', 'Category Name'],
             ['code', 'name', 'description',
               {key:'locationid', func: function(value){ return WPOS.locations.hasOwnProperty(value) ? WPOS.locations[value].name : 'Unknown'; }},
               'cost', 'price', 'stocklevel', 'reorderpoint', 'supplier', 'inventoryNo', 'expiryDate', 'taxname',
@@ -619,7 +624,6 @@
             ],
             data
         );
-
         WPOS.initSave(filename, csv);
     }
 
@@ -639,7 +643,7 @@
           'amount': {title:'*Stock Level', required: true},
           'reorderpoint': {title:'Reorder Point', required: false, value: "0"},
           'supplier_name': {title:'*Supplier Name', required: true},
-          'inventoryNo': {title:'Inventory No', required: false, value: "0000"},
+          'inventoryNo': {title:'Invoice No', required: false, value: "0000"},
           'expiryDate': {title:'Expiry Date', required: false, value: "31/12/2050"},
           'tax_name': {title:'Tax Name', required: false, value: "No Tax"},
           'category_name': {title:'Category Name', required: false, value: "General"}

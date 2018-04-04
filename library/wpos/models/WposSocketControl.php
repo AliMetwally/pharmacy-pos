@@ -131,15 +131,29 @@ class WposSocketControl {
         $configName = 'git config --global user.name "nyugoh"';
         $configEMail = 'git config --global user.email "nyugoh@gmail.com"';
         if ($this->isWindows) {
-            $handle = popen('START "Pharmacy POS System Update" git pull origin master','r');
-            $type = gettype($handle);
-            if ($type == 'NULL')
-                $result["error"] = "Git is not configured.";
-
-            sleep(1);
-            pclose($handle);
+            $pathA = "C:\Program Files\Pharmacy Plus POS\pharmacy-pos\.git";
+            $pathB = "C:\Program Files (x86)\Pharmacy Plus POS\pharmacy-pos\.git";
+            $git_dir = '';
+            if(is_dir($pathB)){
+                $git_dir = $pathB;
+            }
+            if(is_dir($pathA)){
+                $git_dir = $pathA;
+            }
+            $cmd = 'git --git-dir="'.$git_dir.'" pull origin feature/electron';
+            pclose(popen('START '.$configName, 'r'));
+            sleep(2);
+            pclose(popen('START '.$configEMail, 'r'));
+            sleep(2);
+            exec($cmd, $output,$val);
+            foreach ($output as $out)
+                $result['data'] .= $out;
+            if($val === 0){
+                $result['error'] = 'OK';
+            } else
+                $result['data'] = false;
         } else {
-            $cmd = 'git pull origin master';
+            $cmd = 'git pull origin feature/electron';
             exec($cmd, $output, $res);
             if ($res>0)
                 exec($cmd, $output, $res);
@@ -149,7 +163,6 @@ class WposSocketControl {
                 $result['error'] = "Failed to update ! ".json_encode($res).json_encode($output);
             }
         }
-
         return $result;
     }
 
