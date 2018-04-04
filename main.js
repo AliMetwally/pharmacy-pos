@@ -10,7 +10,7 @@ const {
 } = electron;
 
 let mainWindow;
-let cmd = "C:\\POS-old\\php\\php -S localhost:9000 -t C:\\POS-old\\pharmacy-pos C:\\POS-old\\pharmacy-pos\\router.php";// let cmd = "php -S localhost:9000 -t . router.php"; // Linux or mac
+let cmd = "C:\\POS-old\\php\\php -S localhost:9000 -t C:\\POS-old\\biashara-pos C:\\POS-old\\biashara-pos\\router.php";// let cmd = "php -S localhost:9000 -t . router.php"; // Linux or mac
 
 child(cmd, function (err, data) {
   if(err){

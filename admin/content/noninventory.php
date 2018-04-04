@@ -512,7 +512,7 @@
           description: sorted[item][1].description,
           locationid: config.deviceconfig.locationid,
           cost: 0.00,
-          price: '=(PRODUCT(E'+(i)+',1.3))',
+          price: 0.00,
           supplier: '',
           taxname: WPOS.getTaxTable().rules[sorted[item][1].taxid].name,
           categoryid: sorted[item][1].categoryid
@@ -521,15 +521,37 @@
     if (Object.keys(data).length === 0) {
       data[0] = {
         code: "M00001",
-        name: "Flu-gone 200ml",
-        description: "Syrup",
+        name: "Cooking oil 2kg (Example item)",
+        description: "Liquid",
         locationid: config.deviceconfig.locationid,
-        cost: 100,
-        price: '=(PRODUCT(E2,1.3))',
-        supplier: "Freb",
+        cost: 300,
+        price: 350,
+        supplier: "Pwani Oils",
         taxname: "VAT",
-        category: "Medicine"
+        category: "Groceries"
       }
+        data[1] = {
+            code: "M00002",
+            name: "Bic Pen Blue(Example item)",
+            description: "Packet",
+            locationid: config.deviceconfig.locationid,
+            cost: 100,
+            price: 150,
+            supplier: "Haico Brands",
+            taxname: "VAT",
+            category: "Stationaries"
+        }
+        data[2] = {
+            code: "M00003",
+            name: "Polo T-shirt White (Example item)",
+            description: "Box",
+            locationid: config.deviceconfig.locationid,
+            cost: 1500,
+            price: 2000,
+            supplier: "Polo",
+            taxname: "VAT",
+            category: "Cloths"
+        }
     }
 
     var csv = WPOS.data2CSV(
