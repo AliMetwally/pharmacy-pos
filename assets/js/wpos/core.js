@@ -563,7 +563,7 @@ function WPOS() {
       for(var i in subscriptions) {
         if (subscriptions[i].status === 1 && !found) {
           subscription = subscriptions[i];
-          if (moment(subscriptions[i].expiryDate).diff(moment(), "days") >= 30) {
+          if (moment(subscriptions[i].expiryDate).diff(moment(), "days") >= 29) {
             found = true;
             WPOS.sendJsonDataAsync("update/subscription", JSON.stringify(subscriptions[i]), function (results) {
               return results;

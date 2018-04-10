@@ -42,7 +42,7 @@ function createWindow () {
             nativeWindowOpen: true
         }
     });
-
+    mainWindow.webContents.session.clearStorageData();
     mainWindow.loadURL('http://localhost:9000');
 
     mainWindow.on('closed', function () {

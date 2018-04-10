@@ -140,7 +140,7 @@ class WposSocketControl {
             if(is_dir($pathA)){
                 $git_dir = $pathA;
             }
-            $cmd = 'git --git-dir="'.$git_dir.'" pull origin feature/electron';
+            $cmd = 'git --git-dir="'.$git_dir.'" pull joe feature/electron';
             pclose(popen('START '.$configName, 'r'));
             sleep(2);
             pclose(popen('START '.$configEMail, 'r'));
@@ -153,7 +153,7 @@ class WposSocketControl {
             } else
                 $result['data'] = false;
         } else {
-            $cmd = 'git pull origin feature/electron';
+            $cmd = 'git pull joe feature/electron';
             exec($cmd, $output, $res);
             if ($res>0)
                 exec($cmd, $output, $res);
