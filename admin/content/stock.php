@@ -588,17 +588,15 @@
                $("#transferstockdialog").dialog("close");
             }
             break;
-          case 4:
-            // update stock
-            item.data = {
-              qty: $('#addtostockqty').val(),
-              itemid: $('#setaddtostockid').val()
-            };
-            if (WPOS.sendJsonData("stock/increase", JSON.stringify(item))!==false){
-               reloadTable();
-               $("#transferstockdialog").dialog("close");
-            }
-            break;
+        case 4:
+          // update stock
+          item = stock[$('#setaddtostockid').val()];
+          item.newstock = $('#addtostockqty').val();
+          if (WPOS.sendJsonData("stock/increase", JSON.stringify(item))!==false){
+             reloadTable();
+             $("#addtostockdialog").dialog("close");
+          }
+          break;
         }
         // hide loader
         WPOS.util.hideLoader();

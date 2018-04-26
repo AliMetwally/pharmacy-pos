@@ -352,6 +352,10 @@ function routeApiCall($action, $data, $result) {
             $adminMdl = new WposAdminStock($data);
             $result = $adminMdl->importItemsSet($result);
             break;
+        case "stock/increase":
+            $adminMdl = new WposAdminStock($data);
+            $result = $adminMdl->setStockLevel($result);
+            break;
         case "stock/import/start":
             $adminMdl = new WposAdminStock($data);
             $result = $adminMdl->importItemsStart($result);
