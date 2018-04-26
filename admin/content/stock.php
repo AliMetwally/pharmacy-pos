@@ -148,6 +148,15 @@
         </tr>
     </table>
 </div>
+<div id="addtostockdialog" class="hide">
+    <table>
+      <input type="hidden" id="setaddtostockid">
+        <tr>
+            <td><input id="addtostockqty" type="text" class="form-control" placeholder="Add stock here..."/></td>
+        </tr>
+    </table>
+</div>
+
 <div id="stockhistdialog" class="hide">
 
     <div style="width: 100%; overflow-x: auto;">
@@ -220,7 +229,7 @@
                 { mData:"expiryDate" },
                 { mData:"taxname" },
                 { mData:function(data,type,val){return (data.categoryid!=='0'?(categories.hasOwnProperty(data.categoryid)?categories[data.categoryid].name:'Unknown'):'General');} },
-                { mData:function(data,type,val){return '<div class="action-buttons"><a class="green" onclick="openEditStockDialog('+data.id+');"><i class="icon-pencil bigger-130"></i></a><a class="blue" onclick="openTransferStockDialog('+data.id+')"><i class="icon-arrow-right bigger-130"></i></a><a class="red" onclick="getStockHistory('+data.id+', '+data.locationid+');"><i class="icon-time bigger-130"></i></a><a class="red" onclick="deleteStockItem('+data.id+');"><i class="icon-trash bigger-130"></i></a></div>'; }, "bSortable": false }
+                { mData:function(data,type,val){return '<div class="action-buttons"><a class="green" onclick="openEditStockDialog('+data.id+');"><i class="icon-pencil bigger-130"></i></a><a class="blue" onclick="openAddToStockDialog('+data.id+');"><i class="icon-plus bigger-130"></i></a><a class="blue" onclick="openTransferStockDialog('+data.id+')"><i class="icon-arrow-right bigger-130"></i></a><a class="red" onclick="getStockHistory('+data.id+', '+data.locationid+');"><i class="icon-time bigger-130"></i></a><a class="red" onclick="deleteStockItem('+data.id+');"><i class="icon-trash bigger-130"></i></a></div>'; }, "bSortable": false }
             ],
             "columns": [
                 {},
@@ -301,6 +310,37 @@
                 $(this).css("maxWidth", "400px");
             }
         });
+
+        $( "#addtostockdialog").removeClass('hide').dialog({
+                resizable: false,
+                width: 'auto',
+                modal: true,
+                autoOpen: false,
+                title: "Add Stock",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='icon-save bigger-110'></i>&nbsp; Add",
+                        "class" : "btn btn-success btn-xs",
+                        click: function() {
+                            saveItem(4);
+                        }
+                    }
+                    ,
+                    {
+                        html: "<i class='icon-remove bigger-110'></i>&nbsp; Cancel",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ],
+            create: function( event, ui ) {
+                // Set maxWidth
+                $(this).css("maxWidth", "400px");
+            }
+        });
+
         $( "#editstockdialog" ).removeClass('hide').dialog({
             resizable: false,
             width: 'auto',
@@ -467,10 +507,18 @@
         $("#setstockcode").val(item.code);
         $("#editstockdialog").dialog("open");
     }
+
+    function openAddToStockDialog(id){
+        var item = stock[id];
+        $("#setaddtostockid").val(item.id);
+        $("#addtostockdialog").dialog("open");
+    }
+
     function openAddStockDialog(){
         populateItems();
         $("#addstockdialog").dialog("open");
     }
+
     function openTransferStockDialog(id){
         var item = stock[id];
         $("#tstockitem").val(id);
@@ -536,6 +584,17 @@
             item.newlocationid = $("#tstocknewlocid").val();
             item.amount = $("#tstockqty").val();
             if (WPOS.sendJsonData("stock/transfer", JSON.stringify(item))!==false){
+               reloadTable();
+               $("#transferstockdialog").dialog("close");
+            }
+            break;
+          case 4:
+            // update stock
+            item.data = {
+              qty: $('#addtostockqty').val(),
+              itemid: $('#setaddtostockid').val()
+            };
+            if (WPOS.sendJsonData("stock/increase", JSON.stringify(item))!==false){
                reloadTable();
                $("#transferstockdialog").dialog("close");
             }
