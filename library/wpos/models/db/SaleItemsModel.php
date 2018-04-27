@@ -133,7 +133,7 @@ class SaleItemsModel extends DbConfig
             } else {
                 $sql .= ' AND';
             }
-            $sql .= 'saleid = :saleid';
+            $sql .= ' saleid = :saleid';
             $placeholders[':saleid'] = $saleid;
         }
         if ($sitemid !== null) {
@@ -142,7 +142,7 @@ class SaleItemsModel extends DbConfig
             } else {
                 $sql .= ' AND';
             }
-            $sql .= 'storeditemid = :sitemid';
+            $sql .= ' storeditemid = :sitemid';
             $placeholders['sitemid'] = $sitemid;
         }
         if ($limit !== 0 && is_int($limit)) {

@@ -509,6 +509,8 @@ class WposPosSale {
     private function insertVoidRecords($hasrefund, $hasvoid, $result)
     {
         $voidMdl = new SaleVoidsModel();
+        $stockItemsMdl = new StockItemsModel();
+        $saleMdl = new SalesModel();
         // update new refund records
         if ($hasrefund){
             $saleItemsMdl = new SaleItemsModel();
@@ -517,10 +519,26 @@ class WposPosSale {
                 if (!$voidMdl->recordExists($this->id, $refund->processdt)){
                     $this->deviceid = $refund->deviceid; // set device id for the broadcast function
                     $voidMdl->create($this->id, $refund->userid, $refund->deviceid, $refund->locationid, $refund->reason, $refund->method, $refund->amount, json_encode($refund->items), 0, $refund->processdt);
-                    // Increment refunded quantities in the sale_items table
+                    // Increment refunded quantities in the sale_items and stock_items table
+                    $cost = 0;
+                    $sale = $saleMdl->get(0, 0, $this->ref);
                     foreach ($refund->items as $item){
                         $saleItemsMdl->incrementQtyRefunded($this->id, $item->ref, $item->numreturned);
+                        if (sizeof($this->jsonobj->items)>0){
+                            foreach($this->jsonobj->items as $itemobj){
+                                if ($itemobj->sitemid>0 && ($item->ref == $itemobj->ref)){
+                                    $stockItemsMdl->decrementStockLevel($itemobj->sitemid, $item->numreturned, false);
+                                }
+                            }
+                        }
                     }
+                    // Recalculate sale cost
+                    $sitems = $saleItemsMdl->get(null, null, $this->id, null);
+                    for ($i=0;$i<sizeof($sitems);$i++)
+                        $cost += (doubleval($sitems[$i]['cost'])*(intval($sitems[$i]["qty"])-intval($sitems[$i]['refundqty'])));
+                    $sale['cost'] = $cost;
+                    $saleMdl->edit($this->id, $this->ref, json_encode($sale), null, null, null, null, null, null, null, $cost, null, null);
+
                     // Create transaction history record
                     WposTransactions::addTransactionHistory($this->id, isset($_SESSION['userId'])?$_SESSION['userId']:0, "Refunded", "Sale refunded");
                     // log data
@@ -540,10 +558,9 @@ class WposPosSale {
                 } else {
                     // return stock to original sale location
                     if (sizeof($this->jsonobj->items)>0){
-                        $stockItemsMdl = new StockItemsModel();
                         foreach($this->jsonobj->items as $item){
                             if ($item->sitemid>0){
-                                $stockItemsMdl->decrementStockLevel($item->sitemid, $item->qty, true);
+                                $stockItemsMdl->decrementStockLevel($item->sitemid, $item->qty, false);
                             }
                         }
                     }

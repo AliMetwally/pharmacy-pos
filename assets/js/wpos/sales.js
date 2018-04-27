@@ -1814,7 +1814,7 @@ function WPOSSales() {
               // update transaction info
               WPOS.trans.populateTransactionInfo(ref);
               setTimeout(function() {
-                swal('Voided!', 'Your Transaction has been voided.', 'success');
+                  swal('Voided!', 'Your Transaction has been voided.', 'success');
               }, 200);
            }
         });
