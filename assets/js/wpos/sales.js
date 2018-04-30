@@ -1462,6 +1462,7 @@ function WPOSSales() {
         });
         itemtable.children(".item_row, .valid").each(function (index, element) {
           tempqty = parseFloat($(element).find(".itemqty").val());
+          unit = parseFloat($(element).find(".itemunit").val());
           taxdata = $(element).find(".itemtaxval").data('taxdata');
           taxruleid = $(element).find(".itemtax").val();
           totalStockLevel = parseFloat($(element).find(".totalStockLevel").val());
@@ -1516,7 +1517,7 @@ function WPOSSales() {
               }
 
               // calculate item tax
-              var unit = parseFloat(item.price).toFixed(2);
+              // var unit = parseFloat(item.price).toFixed(2);
               var tempprice = qty*unit;
               var tempcost = qty*parseFloat(item.cost).toFixed(2);
               var taxdata = WPOS.util.calcTax(item.taxid, tempprice, tempcost);
@@ -1543,7 +1544,7 @@ function WPOSSales() {
                 "tax": taxdata,
                 "price": parseFloat(tempprice).toFixed(2)
               };
-              itemdata = {desc:item.description, cost:item.cost, unit_original:item.price, alt_name:item.name};
+              itemdata = {desc:item.description, cost:item.cost, unit_original:unit, alt_name:item.name};
               for (var x in itemdata) {
                 data[x] = itemdata[x];
               }
