@@ -15,21 +15,21 @@ let cmd = "C:\\POS-old\\php\\php -S localhost:9000 -t C:\\POS-old\\biashara-pos 
 child(cmd, function (err, data) {
   if(err){
       const fs = require('fs');
-      fs.open('C:\\POS-old\\logs.txt', 'a+', (error, fd) => {
-          if (error) console.log(error);
-          fs.writeFile(fd, err, (err) =>{
-              if (err) console.log(err);
-          });
-      });
+      // fs.open('C:\\POS-old\\logs.txt', 'a+', (error, fd) => {
+      //     if (error) console.log(error);
+      //     fs.writeFile(fd, err, (err) =>{
+      //         if (err) console.log(err);
+      //     });
+      // });
   }
   if(data){
       const fs = require('fs');
-      fs.open('C:\\POS-old\\logs.txt', 'a+', (err, fd) => {
-          if (err) console.log(err);
-          fs.writeFile(fd, data, (err) =>{
-              if (err) console.log(err);
-          });
-      });
+      // fs.open('C:\\POS-old\\logs.txt', 'a+', (err, fd) => {
+      //     if (err) console.log(err);
+      //     fs.writeFile(fd, data, (err) =>{
+      //         if (err) console.log(err);
+      //     });
+      // });
   }
 });
 

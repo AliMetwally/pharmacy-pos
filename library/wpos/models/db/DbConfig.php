@@ -81,7 +81,7 @@ class DbConfig
         $dsn = self::$_dsnPrefix . ':host=' . self::$_hostname . ';port=' . self::$_port . ';dbname=' . self::$_database;
 
         try {
-            $dbFile = $_SERVER['DOCUMENT_ROOT'].'\poss.sqlite';
+            $dbFile = 'poss.sqlite';
 //            'sqlite:'.$dbFile
 //            $dsn, self::$_username, self::$_password
             if (!$this->_db = new \PDO('sqlite:'.$dbFile)){
