@@ -231,21 +231,17 @@
         }
 
         var csv = WPOS.data2CSV(
-            ['ID', 'Reference', 'User', 'Device', 'Location', 'Customer ID', 'Customer Email', 'Items', '# Items', 'Payments', 'Subtotal', 'Discount', 'Total', 'Balance', 'Invoice DT', 'Due DT', 'Created DT', 'Status', 'JSON Data'],
+            ['Reference', 'User', 'Location', 'Customer', 'Items', '# Items', 'Payments', 'Subtotal', 'Discount', 'Total', 'Balance', 'Invoice Date', 'Due Date', 'Created Date', 'Status'],
             [
-                'id', 'ref',
+                'ref',
                 {key:'userid', func: function(value){
                     return WPOS.users.hasOwnProperty(value) ? WPOS.users[value].username : 'Unknown';
-                }},
-                {key:'devid', func: function(value){
-                    return WPOS.devices.hasOwnProperty(value) ? WPOS.devices[value].name : 'Unknown';
                 }},
                 {key:'locid', func: function(value){
                     return WPOS.locations.hasOwnProperty(value) ? WPOS.locations[value].name : 'Unknown';
                 }},
-                'custid',
                 {key:'custid', func: function(value){
-                    return customers.hasOwnProperty(value) ? customers[value].email : '';
+                    return customers.hasOwnProperty(value) ? customers[value].name : '';
                 }},
                 {key:'items', func: function(value){
                     var itemstr = '';
@@ -280,9 +276,6 @@
                         case 3: status = "Refunded"; break;
                     }
                     return status;
-                }},
-                {key:'id', func: function(value, record){
-                    return record;
                 }}
             ],
             data
