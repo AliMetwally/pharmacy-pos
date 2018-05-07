@@ -220,7 +220,13 @@
                     data[ref] = invoices[ref];
             }
         } else {
-            data = invoices;
+            var tempinvoices = [];
+            for (var key in invoices){
+                var status = getTransactionStatus(invoices[key]);
+                if (status === 1 || status === 2)
+                    tempinvoices.push(invoices[key]);
+            }
+            data = tempinvoices;
         }
 
         var csv = WPOS.data2CSV(
@@ -295,7 +301,8 @@
         var invoices = WPOS.transactions.getTransactions();
         var itemarray = [];
         for (var key in invoices){
-            if (invoices[key].status === 1)
+            var status = getTransactionStatus(invoices[key]);
+            if (status === 1 || status === 2)
                 itemarray.push(invoices[key]);
         }
         datatable = $('#invoicestable').dataTable({
