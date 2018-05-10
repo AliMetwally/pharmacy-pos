@@ -17,84 +17,83 @@
 
 <div class="col-sm-5">
     <div class="widget-box transparent">
-    <div class="widget-header widget-header-flat">
-        <h4 class="lighter">
-            <i class="icon-dollar"></i>
-            Today's Takings
-        </h4>
-    </div>
-    <div class="widget-body" style="padding-top: 10px; text-align: center;">
-    <div class="infobox infobox-green infobox-sales">
-        <div class="infobox-icon">
-            <i class="icon-shopping-cart"></i>
+        <div class="widget-header widget-header-flat">
+            <h4 class="lighter">
+                <i class="icon-dollar"></i>
+                Today's Takings
+            </h4>
         </div>
+        <div class="widget-body" style="padding-top: 10px; text-align: center;">
+            <div class="infobox infobox-green infobox-sales">
+                <div class="infobox-icon">
+                    <i class="icon-shopping-cart"></i>
+                </div>
 
-        <div class="infobox-data">
-            <span id="salenum" class="infobox-data-number">-</span>
-            <div class="infobox-content">Sales</div>
+                <div class="infobox-data">
+                    <span id="salenum" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Sales</div>
+                </div>
+                <div id="saletotal" class="stat stat-success">-</div>
+            </div>
+
+            <div class="infobox infobox-orange infobox-refunds">
+                <div class="infobox-icon">
+                    <i class="icon-backward"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span id="refundnum" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Refunds</div>
+                </div>
+
+                <div id="refundtotal" class="stat stat-important">-</div>
+            </div>
+
+            <div class="infobox infobox-red infobox-voids">
+                <div class="infobox-icon">
+                    <i class="icon-ban-circle"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span id="voidnum" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Voids</div>
+                </div>
+                <div id="voidtotal" class="stat stat-important">-</div>
+            </div>
+
+            <div class="infobox infobox-blue2 infobox-takings">
+                <div class="infobox-icon">
+                    <i class="icon-dollar"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span id="takings" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Revenue</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-orange infobox-cost">
+                <div class="infobox-icon">
+                    <i class="icon-dollar"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span id="cost" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Cost</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-green infobox-profit">
+                <div class="infobox-icon">
+                    <i class="icon-dollar"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span id="profit" class="infobox-data-number">-</span>
+                    <div class="infobox-content">Profit</div>
+                </div>
+            </div>
         </div>
-        <div id="saletotal" class="stat stat-success">-</div>
-    </div>
-
-    <div class="infobox infobox-orange infobox-refunds">
-        <div class="infobox-icon">
-            <i class="icon-backward"></i>
-        </div>
-
-        <div class="infobox-data">
-            <span id="refundnum" class="infobox-data-number">-</span>
-            <div class="infobox-content">Refunds</div>
-        </div>
-
-        <div id="refundtotal" class="stat stat-important">-</div>
-    </div><br/>
-
-    <div class="infobox infobox-red infobox-voids">
-        <div class="infobox-icon">
-            <i class="icon-ban-circle"></i>
-        </div>
-
-        <div class="infobox-data">
-            <span id="voidnum" class="infobox-data-number">-</span>
-            <div class="infobox-content">Voids</div>
-        </div>
-        <div id="voidtotal" class="stat stat-important">-</div>
-    </div>
-
-    <div class="infobox infobox-blue2 infobox-takings">
-        <div class="infobox-icon">
-            <i class="icon-dollar"></i>
-        </div>
-
-        <div class="infobox-data">
-            <span id="takings" class="infobox-data-number">-</span>
-            <div class="infobox-content">Revenue</div>
-        </div>
-    </div><br/>
-
-    <div class="infobox infobox-orange infobox-cost">
-        <div class="infobox-icon">
-            <i class="icon-dollar"></i>
-        </div>
-
-        <div class="infobox-data">
-            <span id="cost" class="infobox-data-number">-</span>
-            <div class="infobox-content">Cost</div>
-        </div>
-    </div>
-
-    <div class="infobox infobox-green infobox-profit">
-        <div class="infobox-icon">
-            <i class="icon-dollar"></i>
-        </div>
-
-        <div class="infobox-data">
-            <span id="profit" class="infobox-data-number">-</span>
-            <div class="infobox-content">Profit</div>
-        </div>
-    </div>
-
-    </div>
     </div>
 </div>
 
