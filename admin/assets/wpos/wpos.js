@@ -368,7 +368,6 @@ function WPOSAdmin(){
                         title: 'Oops...',
                         text: err
                       });
-                      
                     return false;
                 }
             }

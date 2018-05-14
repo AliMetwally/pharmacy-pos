@@ -216,12 +216,6 @@
                 title: 'Success.',
                 text: result
             });
-          } else {
-            swal({
-                 type: 'error',
-                title: 'Oops...',
-                text: 'Update Failed!'
-            });
           }
           // hide loader
           WPOS.util.hideLoader();
